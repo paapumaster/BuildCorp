@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Técnico de Mantenimiento" as Tecnico
+actor "Administrador del Sistema" as Admin
+actor "Sistema Central" as Sistema
+
+rectangle "BuildCorp - Subsistema 2: Mantenimiento y Control Financiero" {
+    usecase "Programar Mantenimiento Preventivo" as UC6
+    usecase "Registrar Orden de Reparación y Repuestos" as UC7
+    usecase "Monitorear Alertas de Horas de Uso" as UC8
+    usecase "Generar Alerta de Morosidad y Bloqueo" as UC9
+
+    Tecnico --> UC6
+    Tecnico --> UC7
+    
+    Admin --> UC8
+    Admin --> UC9
+
+    UC6 ..> UC8 : <<include>>
+    UC9 ..> Sistema : <<enforces>>
+}
+@enduml

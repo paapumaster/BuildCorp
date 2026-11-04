@@ -1,24 +1,38 @@
 @startuml
 left to right direction
-skinparam packageStyle rectangle
-
-actor "Técnico de Mantenimiento" as Tecnico
-actor "Administrador del Sistema" as Admin
-actor "Sistema Central" as Sistema
-
-rectangle "BuildCorp - Subsistema 2: Mantenimiento y Control Financiero" {
-    usecase "Programar Mantenimiento Preventivo" as UC6
-    usecase "Registrar Orden de Reparación y Repuestos" as UC7
-    usecase "Monitorear Alertas de Horas de Uso" as UC8
-    usecase "Generar Alerta de Morosidad y Bloqueo" as UC9
-
-    Tecnico --> UC6
-    Tecnico --> UC7
-    
-    Admin --> UC8
-    Admin --> UC9
-
-    UC6 ..> UC8 : <<include>>
-    UC9 ..> Sistema : <<enforces>>
+skinparam shadowing false
+skinparam dpi 160
+skinparam nodesep 25
+skinparam ranksep 45
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam ArrowColor #333333
+skinparam ActorBorderColor #333333
+skinparam UsecaseBackgroundColor #EAF1FB
+skinparam UsecaseBorderColor #1F4E79
+skinparam RectangleBorderColor #1F4E79
+skinparam RectangleBackgroundColor #FFFFFF
+skinparam RectangleFontStyle bold
+ 
+actor "Técnico de\nMantenimiento" as Tecnico
+actor "Administrador\ndel Sistema" as Admin
+ 
+rectangle "BuildCorp - Subsistema 2: Mantenimiento, Control Financiero y Administración" {
+    usecase "CU-07\nProgramar Mantenimiento\nPreventivo" as CU07
+    usecase "CU-08\nGenerar Alerta de\nMorosidad y Bloqueo" as CU08
+    usecase "CU-09\nMonitorear Alertas\nde Horas de Uso" as CU09
+    usecase "CU-10\nRegistrar Intervención\nCorrectiva" as CU10
+    usecase "CU-11\nGestionar Catálogo\nde Activos" as CU11
+    usecase "CU-12\nAprobar Baja\nde Activo" as CU12
 }
+ 
+Tecnico --> CU07
+Tecnico --> CU09
+Tecnico --> CU10
+Admin --> CU08
+Admin --> CU11
+Admin --> CU12
+ 
+CU07 ..> CU09 : <<include>>
+CU10 ..> CU07 : <<extend>>\n{si hay falla reportada}
 @enduml

@@ -1,29 +1,39 @@
 @startuml
 left to right direction
-skinparam packageStyle rectangle
-
+skinparam shadowing false
+skinparam dpi 160
+skinparam nodesep 25
+skinparam ranksep 45
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam ArrowColor #333333
+skinparam ActorBorderColor #333333
+skinparam UsecaseBackgroundColor #EAF1FB
+skinparam UsecaseBorderColor #1F4E79
+skinparam RectangleBorderColor #1F4E79
+skinparam RectangleBackgroundColor #FFFFFF
+skinparam RectangleFontStyle bold
+ 
 actor "Bodeguero" as Bodeguero
-actor "Contratista / Responsable" as Contratista
-actor "Sistema Central" as Sistema
-
+actor "Contratista /\nResponsable de Obra" as Contratista
+ 
 rectangle "BuildCorp - Subsistema 1: Operaciones de Obra y Préstamos" {
-    usecase "Consultar Disponibilidad de Activo" as UC1
-    usecase "Registrar Préstamo de Herramienta" as UC2
-    usecase "Capturar Firma Digital (Offline/PWA)" as UC3
-    usecase "Registrar Devolución y Estado" as UC4
-    usecase "Generar Comprobante Digital" as UC5
-
-    Bodeguero --> UC1
-    Bodeguero --> UC2
-    Bodeguero --> UC4
-    
-    Contratista --> UC1
-    Contratista --> UC3
-    
-    UC2 ..> UC3 : <<include>>
-    UC4 ..> UC5 : <<include>>
-    
-    UC2 --> Sistema
-    UC4 --> Sistema
+    usecase "CU-01\nRegistrar Préstamo\nde Activo" as CU01
+    usecase "CU-02\nRegistrar Devolución\ny Estado" as CU02
+    usecase "CU-03\nCapturar\nFirma Digital" as CU03
+    usecase "CU-04\nConsultar Disponibilidad\nde Activo" as CU04
+    usecase "CU-05\nGenerar Comprobante\nDigital" as CU05
+    usecase "CU-06\nSolicitar Baja\nde Activo" as CU06
 }
+ 
+Bodeguero --> CU01
+Bodeguero --> CU02
+Bodeguero --> CU04
+Bodeguero --> CU06
+Contratista --> CU03
+ 
+CU01 ..> CU03 : <<include>>
+CU01 ..> CU04 : <<include>>
+CU02 ..> CU05 : <<include>>
+CU06 ..> CU02 : <<extend>>\n{si daño severo o pérdida total}
 @enduml
